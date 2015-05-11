@@ -43,4 +43,14 @@
         android:onClick="FunctionC"
         android:text="Button C" />
 
+    <Button
+        android:id="@+id/Button03"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/Button02"
+        android:layout_below="@+id/Button02"
+        android:layout_marginTop="24dp"
+        android:onClick="FunctionE"
+        android:text="Button E" />
+
 </RelativeLayout>

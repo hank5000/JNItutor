@@ -12,12 +12,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import com.example.jnitutor.SomethingClass;
+
 public class MainActivity extends ActionBarActivity {
 //
 	private native void CallJNIInt(int input_int);
 	private native void CallJNIString(String input_string);
 	private native void CallJNIandCallback(String input);
+	private native void CallJNIandFillUpSomething(SomethingClass SomethingC);
+
 	int tag = 0;
+	SomethingClass mSomethingC = null;
+	String JNItag = "JNItutor";
 
     static {
     	System.loadLibrary("JNItutor");
@@ -48,13 +54,35 @@ public class MainActivity extends ActionBarActivity {
 	
 	public void FunctionC(View view)
 	{
-		Log.d("JNItutor","Call to JNI from java and JNI callback to java FunctionD");
+		Log.d(JNItag,"Call to JNI from java and JNI callback to java FunctionD");
 		CallJNIandCallback("Call to JNI");
 	}
 	
 	public void FunctionD()
 	{
-		Log.d("JNItutor","FunctionD is called "+tag);
+		Log.d(JNItag,"FunctionD is called "+tag);
+	}
+	
+	public void FunctionE(View view)
+	{
+		Log.d(JNItag,"Send 'SomethingC' to C, and Create/Fill in JNI side");
+		mSomethingC = new SomethingClass();
+		CallJNIandFillUpSomething(mSomethingC);
+		if(mSomethingC!=null)
+		{
+			// print mesg
+			Log.d(JNItag,"back java side and print the value which is filled in JNI side");
+	
+			Log.d(JNItag,"mInt : "+mSomethingC.mInt);
+			Log.d(JNItag,"mIntArray[0] : "+mSomethingC.mIntArray[0]);
+			Log.d(JNItag,"mIntArray[1] : "+mSomethingC.mIntArray[1]);
+			Log.d(JNItag,"mString : "+mSomethingC.mString);
+			Log.d(JNItag,"mOtherClass.mOtherInt : "+mSomethingC.mOtherClass.mOtherInt);
+		}
+		else
+		{
+			Log.d(JNItag,"mSomethingC is still null");
+		}
 	}
 
 	@Override
